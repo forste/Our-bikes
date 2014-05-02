@@ -10,11 +10,13 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_search">Search</string>
     <string name="title_activity_video">Video</string>
-        <string name="hide_me">Hide</string>
-                <string name="visibility_1_vis">Hide</string>
-                        <string name="visibility_1_invis">Hide</string>
-                
-                                        <string name="visibility_1_gone">Hide</string>
-                        
+    <string name="hide_me">Hide</string>
+    <string name="visibility_1_vis">Hide</string>
+    <string name="visibility_1_invis">Hide</string>
+    <string name="visibility_1_gone">Hide</string>
+    <string name="title_activity_take_reciept_picture">Take Reciept Picture</string>
+    <string name="title_activity_capture_through_existing_app">CaptureThroughExistingAppActivity</string>
+    <string name="title_activity_capture_video_through_existing_app">CaptureVideoThroughExistingAppActivity</string>
+    <string name="title_activity_camera">CameraActivity</string>
 
 </resources>

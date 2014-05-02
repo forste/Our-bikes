@@ -4,6 +4,14 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-sdk
         android:minSdkVersion="19"
         android:targetSdkVersion="19" />
@@ -23,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="forste.ourbikes.DisplayMessageActivity"
+            android:name="forste.ourbikes.SurfaceWithFloatingLabelsActivity"
             android:label="@string/title_activity_display_message"
             android:parentActivityName="forste.ourbikes.MainActivity" >
             <meta-data
@@ -38,6 +46,34 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="forste.ourbikes.MainActivity" />
         </activity>
-    </application>
+        <activity
+            android:name="forste.ourbikes.TakeRecieptPicture"
+            android:label="@string/title_activity_take_reciept_picture"
+            android:parentActivityName="forste.ourbikes.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="forste.ourbikes.MainActivity" />
+        </activity>
+        <activity
+            android:name="forste.ourbikes.CaptureThroughExistingAppActivity"
+            android:label="@string/title_activity_capture_through_existing_app" >
+        </activity>
+        <activity
+            android:name="forste.ourbikes.CaptureVideoThroughExistingAppActivity"
+            android:label="@string/title_activity_capture_video_through_existing_app" >
+        </activity>
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/title_activity_camera"
+            android:screenOrientation="landscape" >
 
+            <!-- configure this activity to use landscape orientation -->
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>
