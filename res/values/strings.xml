@@ -8,7 +8,13 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_display_message">My Message</string>
     <string name="hello_world">Hello world!</string>
-        <string name="action_search">Search</string>
-    
+    <string name="action_search">Search</string>
+    <string name="title_activity_video">Video</string>
+        <string name="hide_me">Hide</string>
+                <string name="visibility_1_vis">Hide</string>
+                        <string name="visibility_1_invis">Hide</string>
+                
+                                        <string name="visibility_1_gone">Hide</string>
+                        
 
 </resources>
