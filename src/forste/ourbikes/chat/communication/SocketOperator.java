@@ -20,7 +20,9 @@ import forste.ourbikes.chat.interfaces.ISocketOperator;
 
 public class SocketOperator implements ISocketOperator
 {
-	public static final String AUTHENTICATION_SERVER_ADDRESS = "http://192.168.66.180:3000/android_im/";
+	public static final String CHAT_SERVER_IP = "192.168.1.144";
+	public static final int CHAT_SERVER_PORT = 3001;
+	public static final String AUTHENTICATION_SERVER_ADDRESS = "http://"+CHAT_SERVER_IP+":3000/android_im/";
 	
 	private int listeningPort = 0;
 	

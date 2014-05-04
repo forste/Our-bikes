@@ -114,7 +114,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		
 
 		
-			String ip = "192.168.66.180";
+			String ip = SocketOperator.CHAT_SERVER_IP;
 			String[] str = ip.split("\\.");
 
 			final byte[] IP = new byte[str.length];
@@ -128,7 +128,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 				protected String doInBackground(String... urls) {
 					try {
 
-						final Socket socket = new Socket(InetAddress.getByAddress(IP), 3001);
+						final Socket socket = new Socket(InetAddress.getByAddress(IP), SocketOperator.CHAT_SERVER_PORT);
 						socketOperator.setSocket(socket);
 
 						Thread thread = new Thread()
@@ -229,9 +229,12 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 
 	public boolean sendMessage(String  username, String message) {
 		FriendInfo friendInfo = FriendController.getFriendInfo(username);
-		String IP = friendInfo.ip;
+		//String IP = friendInfo.ip;
 		//IP = "10.0.2.2";
-		int port = Integer.parseInt(friendInfo.port);
+		String IP = SocketOperator.CHAT_SERVER_IP;
+		
+		//int port = Integer.parseInt(friendInfo.port);
+		int port = SocketOperator.CHAT_SERVER_PORT;
 		
 		String msg = FriendInfo.USERNAME +"=" + URLEncoder.encode(this.username) +
 		 "&" + FriendInfo.USER_KEY + "=" + friendInfo.userKey +
