@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.os.Build;
 
@@ -30,6 +32,12 @@ public class CameraActivity extends Activity {
         mPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
+        Button button = new Button(this);
+        button.setText(R.string.button_back);
+        button.setLayoutParams(new LayoutParams(
+        		ViewGroup.LayoutParams.WRAP_CONTENT,
+        		ViewGroup.LayoutParams.WRAP_CONTENT));
+        preview.addView(button);
 	}
 	
 	/** A safe way to get an instance of the Camera object. */
