@@ -42,6 +42,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -112,51 +113,58 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		timer = new Timer();   
 		
 
-		try {
-
+		
 			String ip = "192.168.66.180";
 			String[] str = ip.split("\\.");
 
-			byte[] IP = new byte[str.length];
+			final byte[] IP = new byte[str.length];
 
 			for (int i = 0; i < str.length; i++) {
 
 				IP[i] = (byte) Integer.parseInt(str[i]);				
 			}
-			final Socket socket = new Socket(InetAddress.getByAddress(IP), 3001);
-			socketOperator.setSocket(socket);
 
-//			PrintWriter out = null;
-//			out = new PrintWriter(socket.getOutputStream(), true);
-//
-//			out.println(message);
+			(new AsyncTask<String, Void, String>() {
+				protected String doInBackground(String... urls) {
+					try {
 
-			Thread thread = new Thread()
-			{
-				@Override
-				public void run() {
-					 try {
-						 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-						 String userInput;
-						 while ((userInput = in.readLine()) != null) {
-							 messageReceived(userInput);	
-						 }
+						final Socket socket = new Socket(InetAddress.getByAddress(IP), 3001);
+						socketOperator.setSocket(socket);
+
+						Thread thread = new Thread()
+						{
+							@Override
+							public void run() {
+								try {
+									BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+									String userInput;
+									while ((userInput = in.readLine()) != null) {
+										messageReceived(userInput);	
+									}
+								} catch (IOException e) {
+									Log.e("ReceiveConnection.run: when receiving connection ","");
+								}			
+							}	
+						};		
+						thread.start();
+					} catch (UnknownHostException e) {			
+						//			return false;
+						//e.printStackTrace();
 					} catch (IOException e) {
-						Log.e("ReceiveConnection.run: when receiving connection ","");
-					}			
-				}	
-			};		
-			thread.start();
+						//			return false;			
+						//e.printStackTrace();
+					}
 
-		} catch (UnknownHostException e) {			
-			//			return false;
-			//e.printStackTrace();
-		} catch (IOException e) {
-			//			return false;			
-			//e.printStackTrace();
-		}
+					return "";
+				}
+			}).execute();
 
-    
+			//			PrintWriter out = null;
+			//			out = new PrintWriter(socket.getOutputStream(), true);
+			//
+			//			out.println(message);
+
+			
     }
 
 /*

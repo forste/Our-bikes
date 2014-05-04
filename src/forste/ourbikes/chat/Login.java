@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -19,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import forste.ourbikes.CameraActivity;
 import forste.ourbikes.R;
 import forste.ourbikes.chat.interfaces.IAppManager;
 import forste.ourbikes.chat.services.IMService;
@@ -78,8 +80,8 @@ public class Login extends Activity {
         /*
          * Start and bind the  imService 
          **/
-    	startService(new Intent(Login.this,  IMService.class));			
-	
+        startService(new Intent(Login.this,  IMService.class));
+       
                
         setContentView(R.layout.login_screen);
         setTitle("Login");
@@ -130,8 +132,8 @@ public class Login extends Activity {
 								 */		
 								handler.post(new Runnable(){
 									public void run() {										
-										Intent i = new Intent(Login.this, FriendList.class);												
-										i.putExtra(FRIEND_LIST, result);						
+										Intent i = new Intent(Login.this, CameraActivity.class);												
+										//i.putExtra(FRIEND_LIST, result);						
 										startActivity(i);	
 										Login.this.finish();
 									}									

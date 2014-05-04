@@ -1,5 +1,6 @@
 package forste.ourbikes;
 
+import forste.ourbikes.chat.Login;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -65,7 +66,7 @@ public class MainActivity extends Activity {
     
     /** Called when the user clicks the Send button */
     public void sendMessage(View view) {
-    	Intent intent = new Intent(this, CameraActivity.class);
+    	Intent intent = new Intent(this, Login.class);
 //    	EditText editText = (EditText) findViewById(R.id.edit_message);
 //    	String message = editText.getText().toString();
 //    	intent.putExtra(EXTRA_MESSAGE, message);
