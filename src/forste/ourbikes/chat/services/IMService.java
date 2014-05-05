@@ -128,17 +128,18 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 				protected String doInBackground(String... urls) {
 					try {
 
-						final Socket socket = new Socket(InetAddress.getByAddress(IP), SocketOperator.CHAT_SERVER_PORT);
-						socketOperator.setSocket(socket);
+						//final Socket socket = new Socket();
+						socketOperator.createSocket(InetAddress.getByAddress(IP), SocketOperator.CHAT_SERVER_PORT);
+						//socketOperator.setSocket(socket);
 
 						Thread thread = new Thread()
 						{
 							@Override
 							public void run() {
 								try {
-									BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+									//BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 									String userInput;
-									while ((userInput = in.readLine()) != null) {
+									while ((userInput = socketOperator.getInputReader().readLine()) != null) {
 										messageReceived(userInput);	
 									}
 								} catch (IOException e) {
@@ -258,7 +259,8 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 	private String getFriendList() 	{		
 		// after authentication, server replies with friendList xml
 		
-		 rawFriendList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+//		 rawFriendList = socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+		 rawFriendList = socketOperator.login(username, password);
 		 if (rawFriendList != null) {
 			 this.parseFriendInfo(rawFriendList);
 		 }
@@ -277,7 +279,9 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		
 		this.authenticatedUser = false;
 		
-		String result = this.getFriendList(); //socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
+		
+		String result = socketOperator.login(username, password);
+		//String result = this.getFriendList(); //socketOperator.sendHttpRequest(getAuthenticateUserParams(username, password));
 		if (result != null && !result.equals(Login.AUTHENTICATION_FAILED)) 
 		{			
 			// if user is authenticated then return string from server is not equal to AUTHENTICATION_FAILED
@@ -336,22 +340,21 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		}
 		Log.i("Message received in service", message);
 		
-		FriendInfo friend = FriendController.checkFriend(username, userKey);
-		if ( friend != null)
-		{			
+//		FriendInfo friend = FriendController.checkFriend(username, userKey);
+//		if ( friend != null)
+//		{			
 			Intent i = new Intent(TAKE_MESSAGE);
 		
-			i.putExtra(FriendInfo.USERNAME, friend.userName);			
+			i.putExtra(FriendInfo.USERNAME, username);			
 			i.putExtra(FriendInfo.MESSAGE, msg);			
 			sendBroadcast(i);
-			String activeFriend = FriendController.getActiveFriend();
-			if (activeFriend == null || activeFriend.equals(username) == false) 
-			{
-				showNotification(username, msg);
-			}
+//			String activeFriend = FriendController.getActiveFriend();
+//			if (activeFriend == null || activeFriend.equals(username) == false) 
+//			{
+//				showNotification(username, msg);
+//			}
 			Log.i("TAKE_MESSAGE broadcast sent by im service", "");
-		}	
-		
+//		}	
 	}  
 	
 	private String getAuthenticateUserParams(String usernameText, String passwordText) 

@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,7 +36,9 @@ public class SocketOperator implements ISocketOperator
 	private boolean listening;
 
 	private IAppManager appManager;
-	private Socket clientSocket; 
+	private Socket clientSocket;
+	private BufferedReader inputReader;
+	private PrintWriter outputWriter; 
 	
 	
 //	private class ReceiveConnection extends Thread {
@@ -123,27 +126,56 @@ public class SocketOperator implements ISocketOperator
 	
 	}
 
+	public String login(String username, String password) 
+	{
+		String result = new String();
+		Socket socket = this.clientSocket;
+		if (socket == null) {
+			return null;
+		}
 
+//			PrintWriter out = null;
+//			out = new PrintWriter(socket.getOutputStream(), true);
+//			
+		String params = "username=" + URLEncoder.encode(username) +
+				"&password="+ URLEncoder.encode(password) +
+				"&action="  + URLEncoder.encode("authenticateUser")+
+				"&";	
+		
+		this.outputWriter.println(params);
+//			out.close();
+
+//			BufferedReader in = new BufferedReader(
+//					new InputStreamReader(
+//							socket.getInputStream()));
+//			String inputLine;
+//			while ((inputLine = this.inputReader.readLine()) != null) {
+//				result = result.concat(inputLine);				
+//			}
+////			in.close();
+		result = "<data><user userKey='1'/></data>";
+		return result;
+	}
 
 	public boolean sendMessage(String message, String ip, int port) 
 	{
-		try {
-			Socket socket = this.clientSocket;
-			if (socket == null) {
-				return false;
-			}
-		
-			PrintWriter out = null;
-			out = new PrintWriter(socket.getOutputStream(), true);
-			
-			out.println(message);
-		} catch (UnknownHostException e) {			
-			return false;
-			//e.printStackTrace();
-		} catch (IOException e) {
-			return false;			
-			//e.printStackTrace();
-		}
+//		try {
+//			Socket socket = this.clientSocket;
+//			if (socket == null) {
+//				return false;
+//			}
+//		
+//			PrintWriter out = null;
+//			out = new PrintWriter(socket.getOutputStream(), true);
+//			
+		this.outputWriter.println(message);
+//		} catch (UnknownHostException e) {			
+//			return false;
+//			//e.printStackTrace();
+//		} catch (IOException e) {
+//			return false;			
+//			//e.printStackTrace();
+//		}
 		
 		return true;		
 	}
@@ -259,8 +291,16 @@ public class SocketOperator implements ISocketOperator
 
 
 	@Override
-	public void setSocket(Socket socket) {
-		this.clientSocket = socket;
+	public void createSocket(InetAddress byAddress, int chatServerPort) throws IOException {
+		this.clientSocket =  new Socket(byAddress, chatServerPort);
+		this.inputReader = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
+		this.outputWriter = new PrintWriter(this.clientSocket.getOutputStream(), true);
+	}
+
+
+	@Override
+	public BufferedReader getInputReader() {
+		return this.inputReader;
 	}	
 
 }
