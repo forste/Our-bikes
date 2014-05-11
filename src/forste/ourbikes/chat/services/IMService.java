@@ -230,6 +230,9 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 
 	public boolean sendMessage(String  username, String message) {
 		FriendInfo friendInfo = FriendController.getFriendInfo(username);
+		friendInfo = new FriendInfo();
+		friendInfo.userKey = "2";
+		
 		//String IP = friendInfo.ip;
 		//IP = "10.0.2.2";
 		String IP = SocketOperator.CHAT_SERVER_IP;
@@ -240,7 +243,7 @@ public class IMService extends Service implements IAppManager, IUpdateData {
 		String msg = FriendInfo.USERNAME +"=" + URLEncoder.encode(this.username) +
 		 "&" + FriendInfo.USER_KEY + "=" + friendInfo.userKey +
 		 "&" + FriendInfo.MESSAGE + "=" + URLEncoder.encode(message) +
-		 "&" + "sender" + "=" + userKey + //SENDER is facked for now
+		 "&" + "sender" + "=" + 1 + //SENDER is facked for now
 		 "&";
 		return socketOperator.sendMessage(msg, IP,  port);
 		

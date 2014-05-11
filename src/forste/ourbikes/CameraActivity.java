@@ -109,10 +109,11 @@ public class CameraActivity extends Activity {
 //		friend.ip = extras.getString(FriendInfo.IP);
 //		friend.port = extras.getString(FriendInfo.PORT);
 //		String msg = extras.getString(FriendInfo.MESSAGE);
-		friend.userName = "stephan";
+		friend.userName = "michael";
 		friend.ip = "";
 		friend.port = "";
-		String msg = "hello";
+		String msg = "Hi, can I help you?";
+		msg = null;
 //		/msg = null;
 		
 		if (msg != null) 
@@ -146,7 +147,7 @@ public class CameraActivity extends Activity {
 				message = messageText.getText();
 				if (message.length()>0) 
 				{		
-					appendToMessageHistory(imService.getUsername(), message.toString());
+					appendToMessageHistory("You", message.toString());
 								
 					messageText.setText("");
 					Thread thread = new Thread(){					
